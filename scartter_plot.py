@@ -53,7 +53,6 @@ for house,dataHouse in lstHouse.items() :
 
 
 for house,info in infoHouse.items():
-    #print(house)
     for id,line in enumerate(lstAnalyse):
         string = "%-10s"%line
         if id == 0: 
@@ -62,7 +61,7 @@ for house,info in infoHouse.items():
         else:
             for col in lstFeature:
                 string += "%13.6f"%info[col][line]
-        #print(string)
+
 
 compFeat = {}
 
@@ -71,28 +70,28 @@ def ft_abs(nb):
         nb = -nb
     return nb
 
+dictFeature[key]
+
 def comparFeat(compar, lstFeat):
     result = {}
     for featComp in lstFeat:
-        somme = 0
+        sommeCov = 0
+        sommeVarX = 0
+        sommeVarY = 0
         count = 0
         for house in lstNameHouse:
             for index, note in enumerate(lstHouse[house][compar]):
-                somme += note - lstHouse[house][featComp][index]
+                sommeCov += (lstHouse[house][featComp][index] - dictFeature[featComp]['mean'])*(lstHouse[house][compar][index] - dictFeature[compar]['mean'])
+                sommeVarX += (lstHouse[house][featComp][index] - dictFeature[featComp]['mean'])**2
+                sommeVarY += (lstHouse[house][compar][index] - dictFeature[compar]['mean'])**2
                 count += 1
-        moyDesDifferences = somme / count
-        somme = 0
-        count = 0
-        for house in lstNameHouse:
-            for index, note in enumerate(lstHouse[house][compar]):
-                somme += (note - lstHouse[house][featComp][index])**2 
-                count += 1
-        ecartType = ((somme/ count )- (moyDesDifferences)**2)**0.5
-        sd = ((count/(count-1))*ecartType)**0.5
-        # Tobs = (ft_abs(moyDesDifferences))/(sd/(count**0.5))
-        Tobs = (ft_abs(moyDesDifferences))/(sd/(count**0.5))
-        result[featComp] = Tobs
-        #print(count, moyDesDifferences, Tobs, ecartType)
+        cov = sommeCov / count
+        varX = sommeVarX / count
+        varY = sommeVarY / count
+
+        coefCorrelation = cov / ((varX*varY)**0.5)
+
+        result[featComp] = coefCorrelation
     return result
 
 
@@ -105,50 +104,16 @@ for i in range(12):
     
 
 
-min = 100
+min = 0
 
 for feat1,lstComp in compFeat.items():
     for feat2,result in lstComp.items():
-        if result < 100:
-            print(feat1,feat2)
-        if result < min:
-            # max_nbins = 10
-            # data1=lstHouse["Ravenclaw"][feat1]
-            # data2=lstHouse["Slytherin"][feat1]
-            # data3=lstHouse["Gryffindor"][feat1]
-            # data4=lstHouse["Hufflepuff"][feat1]
-            # data5=lstHouse["Ravenclaw"][feat2]
-            # data6=lstHouse["Slytherin"][feat2]
-            # data7=lstHouse["Gryffindor"][feat2]
-            # data8=lstHouse["Hufflepuff"][feat2]
-            # data_range = [0,500]
-            # binwidth=(data_range[1]-data_range[0])/max_nbins
-
-            # plt.scatter(data1[:20],data5[:20],c='#AE0001',alpha=1)
-            # plt.scatter(data2[:20],data6[:20],c='#222F5B',alpha=1)
-            # plt.scatter(data3[:20],data7[:20],c='#F0C75E',alpha=1)
-            # plt.scatter(data4[:20],data8[:20],c='#2A623D',alpha=1)
-            # plt.ylabel(feat2)
-            # plt.xlabel(feat1)
-            # plt.title(feat1)
-            # plt.show()
-
-            min = result
+        if abs(result) > min:
+            min = abs(result)
             featMin1 = feat1
             featMin2 = feat2
 
 print(featMin1, featMin2)
-
-# bins = [x + 1 for x in range(0, 1000, 100)]
-# for house in lstNameHouse:
-#     plt.hist(lstHouse[house][featMin], bins = bins)
-# plt.ylabel('y')
-# plt.xlabel('x')
-# plt.title('title')
-# plt.show()
-
-featMin1 = "Astronomy"
-featMin2 = "Defense Against the Dark Arts"
 
 max_nbins = 10
 data1=lstHouse["Ravenclaw"][featMin1]
@@ -163,42 +128,6 @@ data_range = [0,500]
 binwidth=(data_range[1]-data_range[0])/max_nbins
 
 
-# while "" in data1:
-#     data1.remove("")
-
-# data1 =sorted(data1)
-# while "" in data2:
-#     data2.remove("")
-
-
-# print("2")
-
-# while "" in data3:
-#     data3.remove("")
-
-# print("3")
-
-# while "" in data4:
-#     data4.remove("")
-
-# print("4")
-
-
-# while "" in data5:
-#     data5.remove("")
-
-# while "" in data6:
-#     data6.remove("")
-
-# while "" in data7:
-#     data7.remove("")
-
-# while "" in data8:
-#     data8.remove("")
-
-
-
-
 plt.scatter(data1[:20],data5[:20],c='#AE0001',alpha=1)
 plt.scatter(data2[:20],data6[:20],c='#222F5B',alpha=1)
 plt.scatter(data3[:20],data7[:20],c='#F0C75E',alpha=1)
@@ -207,7 +136,3 @@ plt.ylabel(featMin2)
 plt.xlabel(featMin1)
 plt.title(featMin1)
 plt.show()
-
-print((4)**0.5)
-
-#ax.legend(loc='best')
