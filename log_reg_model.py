@@ -90,98 +90,93 @@ dataSet = pd.read_csv("datasets/dataset_train.csv", usecols=["Hogwarts House"]+l
 dataSet = dataSet.dropna(axis=0)
 print(dataSet)
 
+hufflepuff = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[1,0,0,0])
+ravenclaw = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[0,1,0,0])
+slytherin = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[0,0,1,0])
+gryffindor = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[0,0,0,1])
 
 
 
-data_census = pd.read_csv("./day08/ex10/solar_system_census.csv", index_col=0)
-data_census_planets = pd.read_csv('day08/ex10/solar_system_census_planets.csv', index_col=0)
-# print(data_census, data_census_planets)
+mlRPHufflepuff = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
+Y0 = np.array(hufflepuff).reshape((hufflepuff.shape[0],1))
+X = np.array(dataSet[lstFeature])
+print(mlRPHufflepuff.vec_log_loss_(Y0,mlRPHufflepuff.ligistic_predict_(X)))
 
-data_census_planets0 = data_census_planets['Origin'].replace([0.0,1.0,2.0,3.0],[1,0,0,0])
-data_census_planets1 = data_census_planets['Origin'].replace([0.0,1.0,2.0,3.0],[0,1,0,0])
-data_census_planets2 = data_census_planets['Origin'].replace([0.0,1.0,2.0,3.0],[0,0,1,0])
-data_census_planets3 = data_census_planets['Origin'].replace([0.0,1.0,2.0,3.0],[0,0,0,1])
-
-
-
-mlRP0 = MyLogisticRegression([[ 4.90348242], [-0.02999681], [-0.03250215], [ 2.40047782]],alpha=0.0001,n_cycle=10000)
-Y0 = np.array(data_census_planets0).reshape((data_census_planets0.shape[0],1))
-X = np.array(data_census)
-print(mlRP0.vec_log_loss_(Y0,mlRP0.ligistic_predict_(X)))
-
-# mlRP0.fit_(X, Y0)
-print(mlRP0.theta)
-predict0 = mlRP0.ligistic_predict_(X)
-print(mlRP0.vec_log_loss_(Y0,mlRP0.ligistic_predict_(X)))
+mlRPHufflepuff.fit_(X, Y0)
+print(mlRPHufflepuff.theta)
+predictHufflepuff = mlRPHufflepuff.ligistic_predict_(X)
+print(mlRPHufflepuff.vec_log_loss_(Y0,mlRPHufflepuff.ligistic_predict_(X)))
 # print(Y)
 
 
 
 
-mlRP1 = MyLogisticRegression([[ 1.28802845], [-0.06179008], [ 0.01894334], [ 8.00000601]],alpha=0.0001,n_cycle=10000)
-Y1 = np.array(data_census_planets1).reshape((data_census_planets1.shape[0],1))
-X = np.array(data_census)
-print(mlRP1.vec_log_loss_(Y1,mlRP1.ligistic_predict_(X)))
+mlRPRavenclaw = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
+Y1 = np.array(ravenclaw).reshape((ravenclaw.shape[0],1))
+X = np.array(dataSet[lstFeature])
+print(mlRPRavenclaw.vec_log_loss_(Y1,mlRPRavenclaw.ligistic_predict_(X)))
 
-# mlRP1.fit_(X, Y1)
-print(mlRP1.theta)
-predict1 = mlRP1.ligistic_predict_(X)
-print(mlRP1.vec_log_loss_(Y1,mlRP1.ligistic_predict_(X)))
-
-
-
-
-mlRP2 = MyLogisticRegression([[-4.75798975], [-0.00574743], [ 0.09731946], [-4.55362614]],alpha=0.0001,n_cycle=10000)
-Y2 = np.array(data_census_planets2).reshape((data_census_planets2.shape[0],1))
-X = np.array(data_census)
-print(mlRP2.vec_log_loss_(Y2,mlRP2.ligistic_predict_(X)))
-
-# mlRP2.fit_(X, Y2)
-print(mlRP2.theta)
-predict2 = mlRP2.ligistic_predict_(X)
-print(mlRP2.vec_log_loss_(Y2,mlRP2.ligistic_predict_(X)))
+mlRPRavenclaw.fit_(X, Y1)
+print(mlRPRavenclaw.theta)
+predictRavenclaw = mlRPRavenclaw.ligistic_predict_(X)
+print(mlRPRavenclaw.vec_log_loss_(Y1,mlRPRavenclaw.ligistic_predict_(X)))
 
 
 
 
+mlRPSlytherin = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
+Y2 = np.array(slytherin).reshape((slytherin.shape[0],1))
+X = np.array(dataSet[lstFeature])
+print(mlRPSlytherin.vec_log_loss_(Y2,mlRPSlytherin.ligistic_predict_(X)))
+
+mlRPSlytherin.fit_(X, Y2)
+print(mlRPSlytherin.theta)
+predictSlytherin = mlRPSlytherin.ligistic_predict_(X)
+print(mlRPSlytherin.vec_log_loss_(Y2,mlRPSlytherin.ligistic_predict_(X)))
 
 
-mlRP3 = MyLogisticRegression([[-2.20593027], [ 0.08724529], [-0.09877385], [-8.59898021]],alpha=0.0001,n_cycle=10000)
-Y3 = np.array(data_census_planets3).reshape((data_census_planets3.shape[0],1))
-X = np.array(data_census)
-print(mlRP3.vec_log_loss_(Y3,mlRP3.ligistic_predict_(X)))
-
-# mlRP3.fit_(X, Y3)
-print(mlRP3.theta)
-predict3 = mlRP3.ligistic_predict_(X)
-print(mlRP3.vec_log_loss_(Y3,mlRP3.ligistic_predict_(X)))
 
 
-res = np.concatenate((predict0,predict1,predict2,predict3),axis=1)
+
+
+mlRPGryffindor = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
+Y3 = np.array(gryffindor).reshape((gryffindor.shape[0],1))
+X = np.array(dataSet[lstFeature])
+print(mlRPGryffindor.vec_log_loss_(Y3,mlRPGryffindor.ligistic_predict_(X)))
+
+mlRPGryffindor.fit_(X, Y3)
+print(mlRPGryffindor.theta)
+predictGryffindor = mlRPGryffindor.ligistic_predict_(X)
+print(mlRPGryffindor.vec_log_loss_(Y3,mlRPGryffindor.ligistic_predict_(X)))
+
+
+res = np.concatenate((predictHufflepuff,predictRavenclaw,predictSlytherin,predictGryffindor),axis=1)
 res = np.argmax(res, axis=1)
-res = res.reshape((res.shape[0],1))
+
+lstHouse = ["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"]
+resHouse = []
+for index, val  in enumerate(res):
+    #print(val)
+    resHouse += [lstHouse[int(val)]]
+resHouse = np.array(resHouse)
+#res = res.replace([0,1,2,3], ["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"])
+resHouse = resHouse.reshape((resHouse.shape[0],1))
 
 #print(np.concatenate((data_census_planets, res), axis=1))
-print(list(data_census_planets['Origin']), res.reshape(res.shape[0]))
-print(confusion_matrix_(list(data_census_planets['Origin']),res.reshape(res.shape[0]), labels=None))
+print(list(dataSet['Hogwarts House']), resHouse.reshape(res.shape[0]))
+print(confusion_matrix_(list(dataSet['Hogwarts House']),resHouse.reshape(resHouse.shape[0]), labels=None))
 
 def countTest(y, y_hat, true = 1):
     tp, fp, tn, fn = 0,0,0,0
     for valY, valHat in zip(y,y_hat):
-        if valY == true:
-            if valHat == true:
-                tp += 1
-            else:
-                fn += 1
+        if valY == valHat:
+            tp += 1
         else:
-            if valHat == true:
-                fp += 1
-            else:
-                tn += 1
+            fp += 1
     return tp, fp, tn, fn
 
 def precision_score_(y, y_hat, pos_label=1):
     tp, fp, tn, fn = countTest(y, y_hat, true = pos_label)
     return tp / (tp + fp)
 
-print(precision_score_(list(data_census_planets['Origin']), res.reshape(res.shape[0])))
+print(precision_score_(list(dataSet['Hogwarts House']), resHouse.reshape(res.shape[0])))
