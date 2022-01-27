@@ -11,7 +11,6 @@ infoHouse = {}
 dataSet = pandas.read_csv("datasets/dataset_train.csv", usecols=["Hogwarts House"]+lstFeature)
 dataSet.fillna("",inplace=True)
 
-
 for house,elem in lstHouse.items():
     for feat in lstFeature :
         lstHouse[house][feat] = []
@@ -19,7 +18,6 @@ for house,elem in lstHouse.items():
 for index,house in enumerate(dataSet["Hogwarts House"]):
     for feat in lstFeature :
         lstHouse[house][feat] += [dataSet[feat][index]]
-
     
 for house,dataHouse in lstHouse.items() :
     dictFeature = {}
@@ -45,7 +43,6 @@ for house,dataHouse in lstHouse.items() :
 
         dictFeature[key] = info
     infoHouse[house] = dictFeature
-
 
 for house,info in infoHouse.items():
     for id,line in enumerate(lstAnalyse):
@@ -77,17 +74,13 @@ def comparHouse(compar, lstHouse, feature):
     return result
 
 for feat in lstFeature:
-    print(feat)
     compFeat[feat] = []
     for i in range(3):
         compFeat[feat] += comparHouse(lstNameHouse[i],lstNameHouse[i+1:],feat)
-    print(compFeat[feat])
-    
     somme = 0
     for nb in compFeat[feat]:
         somme += nb
     compFeat[feat] = somme/len(compFeat[feat])
-
 
 min = 100
 featMin = ""
@@ -104,9 +97,18 @@ data4=lstHouse["Hufflepuff"][featMin]
 data_range = [0,500]
 binwidth=(data_range[1]-data_range[0])/max_nbins
 
-for dt in [data1,data2,data3,data4]:
-    while "" in dt:
-        dt.remove("")
+while "" in data1:
+    data1.remove("")
+data1 =sorted(data1)
+while "" in data2:
+    data2.remove("")
+data2 = sorted(data2)
+while "" in data3:
+    data3.remove("")
+data3 = sorted(data3)
+while "" in data4:
+    data4.remove("")
+data4 = sorted(data4)
 
 mini = int(data2[0])
 maxi = int(data3[-1])

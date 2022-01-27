@@ -11,7 +11,6 @@ infoHouse = {}
 dataSet = pandas.read_csv("datasets/dataset_train.csv", usecols=["Hogwarts House"]+lstFeature)
 dataSet.fillna("",inplace=True)
 
-
 for house,elem in lstHouse.items():
     for feat in lstFeature:
         lstHouse[house][feat] = []
@@ -19,7 +18,6 @@ for house,elem in lstHouse.items():
 for index,house in enumerate(dataSet["Hogwarts House"]):
     for feat in lstFeature :
         lstHouse[house][feat] += [dataSet[feat][index]]
-
     
 for house,dataHouse in lstHouse.items() :
     dictFeature = {}
@@ -50,8 +48,6 @@ for house,dataHouse in lstHouse.items() :
         dictFeature[key] = info
     infoHouse[house] = dictFeature
 
-
-
 for house,info in infoHouse.items():
     for id,line in enumerate(lstAnalyse):
         string = "%-10s"%line
@@ -61,7 +57,6 @@ for house,info in infoHouse.items():
         else:
             for col in lstFeature:
                 string += "%13.6f"%info[col][line]
-
 
 compFeat = {}
 
@@ -94,15 +89,9 @@ def comparFeat(compar, lstFeat):
         result[featComp] = coefCorrelation
     return result
 
-
-
 compFeat = {}
 for i in range(12):
     compFeat[lstFeature[i]] = comparFeat(lstFeature[i],lstFeature[i+1:])
-    print(lstFeature[i])
-    print(compFeat[lstFeature[i]])
-    
-
 
 min = 0
 
@@ -112,8 +101,6 @@ for feat1,lstComp in compFeat.items():
             min = abs(result)
             featMin1 = feat1
             featMin2 = feat2
-
-print(featMin1, featMin2)
 
 max_nbins = 10
 data1=lstHouse["Ravenclaw"][featMin1]
@@ -126,7 +113,6 @@ data7=lstHouse["Gryffindor"][featMin2]
 data8=lstHouse["Hufflepuff"][featMin2]
 data_range = [0,500]
 binwidth=(data_range[1]-data_range[0])/max_nbins
-
 
 plt.scatter(data1[:20],data5[:20],c='#AE0001',alpha=1)
 plt.scatter(data2[:20],data6[:20],c='#222F5B',alpha=1)
