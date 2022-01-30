@@ -71,72 +71,72 @@ def confusion_matrix_(y, y_hat, labels=None):
 
 lstFeature = ["Herbology","Defense Against the Dark Arts","Divination","Muggle Studies","Ancient Runes","History of Magic","Transfiguration","Potions","Charms","Flying"]
 
-dataSet = pd.read_csv("datasets/dataset_train.csv", usecols=["Hogwarts House"]+lstFeature)
-dataSet = dataSet.dropna(axis=0)
-#print(dataSet)
+# dataSet = pd.read_csv("datasets/dataset_train.csv", usecols=["Hogwarts House"]+lstFeature)
+# dataSet = dataSet.dropna(axis=0)
+# #print(dataSet)
 
-hufflepuff = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[1,0,0,0])
-ravenclaw = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[0,1,0,0])
-slytherin = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[0,0,1,0])
-gryffindor = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[0,0,0,1])
-
-
-
-mlRPHufflepuff = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
-Y0 = np.array(hufflepuff).reshape((hufflepuff.shape[0],1))
-X = np.array(dataSet[lstFeature])
-print(mlRPHufflepuff.vec_log_loss_(Y0,mlRPHufflepuff.ligistic_predict_(X)))
-
-mlRPHufflepuff.fit_(X, Y0)
-print(mlRPHufflepuff.theta)
-predictHufflepuff = mlRPHufflepuff.ligistic_predict_(X)
-print(mlRPHufflepuff.vec_log_loss_(Y0,mlRPHufflepuff.ligistic_predict_(X)))
-
-mlRPRavenclaw = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
-Y1 = np.array(ravenclaw).reshape((ravenclaw.shape[0],1))
-X = np.array(dataSet[lstFeature])
-print(mlRPRavenclaw.vec_log_loss_(Y1,mlRPRavenclaw.ligistic_predict_(X)))
-
-mlRPRavenclaw.fit_(X, Y1)
-print(mlRPRavenclaw.theta)
-predictRavenclaw = mlRPRavenclaw.ligistic_predict_(X)
-print(mlRPRavenclaw.vec_log_loss_(Y1,mlRPRavenclaw.ligistic_predict_(X)))
+# hufflepuff = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[1,0,0,0])
+# ravenclaw = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[0,1,0,0])
+# slytherin = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[0,0,1,0])
+# gryffindor = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],[0,0,0,1])
 
 
 
+# mlRPHufflepuff = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
+# Y0 = np.array(hufflepuff).reshape((hufflepuff.shape[0],1))
+# X = np.array(dataSet[lstFeature])
+# print(mlRPHufflepuff.vec_log_loss_(Y0,mlRPHufflepuff.ligistic_predict_(X)))
 
-mlRPSlytherin = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
-Y2 = np.array(slytherin).reshape((slytherin.shape[0],1))
-X = np.array(dataSet[lstFeature])
-print(mlRPSlytherin.vec_log_loss_(Y2,mlRPSlytherin.ligistic_predict_(X)))
+# mlRPHufflepuff.fit_(X, Y0)
+# print(mlRPHufflepuff.theta)
+# predictHufflepuff = mlRPHufflepuff.ligistic_predict_(X)
+# print(mlRPHufflepuff.vec_log_loss_(Y0,mlRPHufflepuff.ligistic_predict_(X)))
 
-mlRPSlytherin.fit_(X, Y2)
-print(mlRPSlytherin.theta)
-predictSlytherin = mlRPSlytherin.ligistic_predict_(X)
-print(mlRPSlytherin.vec_log_loss_(Y2,mlRPSlytherin.ligistic_predict_(X)))
+# mlRPRavenclaw = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
+# Y1 = np.array(ravenclaw).reshape((ravenclaw.shape[0],1))
+# X = np.array(dataSet[lstFeature])
+# print(mlRPRavenclaw.vec_log_loss_(Y1,mlRPRavenclaw.ligistic_predict_(X)))
 
-mlRPGryffindor = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
-Y3 = np.array(gryffindor).reshape((gryffindor.shape[0],1))
-X = np.array(dataSet[lstFeature])
-print(mlRPGryffindor.vec_log_loss_(Y3,mlRPGryffindor.ligistic_predict_(X)))
+# mlRPRavenclaw.fit_(X, Y1)
+# print(mlRPRavenclaw.theta)
+# predictRavenclaw = mlRPRavenclaw.ligistic_predict_(X)
+# print(mlRPRavenclaw.vec_log_loss_(Y1,mlRPRavenclaw.ligistic_predict_(X)))
 
-mlRPGryffindor.fit_(X, Y3)
-print(mlRPGryffindor.theta)
-predictGryffindor = mlRPGryffindor.ligistic_predict_(X)
-print(mlRPGryffindor.vec_log_loss_(Y3,mlRPGryffindor.ligistic_predict_(X)))
 
-res = np.concatenate((predictHufflepuff,predictRavenclaw,predictSlytherin,predictGryffindor),axis=1)
-res = np.argmax(res, axis=1)
 
-lstHouse = ["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"]
-resHouse = []
-for index, val  in enumerate(res):
-    resHouse += [lstHouse[int(val)]]
-resHouse = np.array(resHouse)
-resHouse = resHouse.reshape((resHouse.shape[0],1))
 
-print(list(dataSet['Hogwarts House']), resHouse.reshape(res.shape[0]))
-print(confusion_matrix_(list(dataSet['Hogwarts House']),resHouse.reshape(resHouse.shape[0]), labels=None))
+# mlRPSlytherin = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
+# Y2 = np.array(slytherin).reshape((slytherin.shape[0],1))
+# X = np.array(dataSet[lstFeature])
+# print(mlRPSlytherin.vec_log_loss_(Y2,mlRPSlytherin.ligistic_predict_(X)))
+
+# mlRPSlytherin.fit_(X, Y2)
+# print(mlRPSlytherin.theta)
+# predictSlytherin = mlRPSlytherin.ligistic_predict_(X)
+# print(mlRPSlytherin.vec_log_loss_(Y2,mlRPSlytherin.ligistic_predict_(X)))
+
+# mlRPGryffindor = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
+# Y3 = np.array(gryffindor).reshape((gryffindor.shape[0],1))
+# X = np.array(dataSet[lstFeature])
+# print(mlRPGryffindor.vec_log_loss_(Y3,mlRPGryffindor.ligistic_predict_(X)))
+
+# mlRPGryffindor.fit_(X, Y3)
+# print(mlRPGryffindor.theta)
+# predictGryffindor = mlRPGryffindor.ligistic_predict_(X)
+# print(mlRPGryffindor.vec_log_loss_(Y3,mlRPGryffindor.ligistic_predict_(X)))
+
+# res = np.concatenate((predictHufflepuff,predictRavenclaw,predictSlytherin,predictGryffindor),axis=1)
+# res = np.argmax(res, axis=1)
+
+# lstHouse = ["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"]
+# resHouse = []
+# for index, val  in enumerate(res):
+#     resHouse += [lstHouse[int(val)]]
+# resHouse = np.array(resHouse)
+# resHouse = resHouse.reshape((resHouse.shape[0],1))
+
+# print(list(dataSet['Hogwarts House']), resHouse.reshape(res.shape[0]))
+# print(confusion_matrix_(list(dataSet['Hogwarts House']),resHouse.reshape(resHouse.shape[0]), labels=None))
 
 def countTest(y, y_hat, true = 1):
     tp, fp, tn, fn = 0,0,0,0
@@ -151,55 +151,75 @@ def precision_score_(y, y_hat, pos_label=1):
     tp, fp, tn, fn = countTest(y, y_hat, true = pos_label)
     return tp / (tp + fp)
 
-print(precision_score_(list(dataSet['Hogwarts House']), resHouse.reshape(res.shape[0])))
+# print(precision_score_(list(dataSet['Hogwarts House']), resHouse.reshape(res.shape[0])))
 
-dataTest = pd.read_csv("datasets/dataset_test.csv")
-dataSet = dataSet.dropna(axis=0)
-X = dataTest[lstFeature]
-X = X.fillna(X.mean())
+# dataTest = pd.read_csv("datasets/dataset_test.csv")
+# dataSet = dataSet.dropna(axis=0)
+# X = dataTest[lstFeature]
+# X = X.fillna(X.mean())
 
-predictHufflepuff = mlRPHufflepuff.ligistic_predict_(X)
-predictRavenclaw = mlRPRavenclaw.ligistic_predict_(X)
-predictSlytherin = mlRPSlytherin.ligistic_predict_(X)
-predictGryffindor = mlRPGryffindor.ligistic_predict_(X)
+# predictHufflepuff = mlRPHufflepuff.ligistic_predict_(X)
+# predictRavenclaw = mlRPRavenclaw.ligistic_predict_(X)
+# predictSlytherin = mlRPSlytherin.ligistic_predict_(X)
+# predictGryffindor = mlRPGryffindor.ligistic_predict_(X)
 
-res = np.concatenate((predictHufflepuff,predictRavenclaw,predictSlytherin,predictGryffindor),axis=1)
-res = np.argmax(res, axis=1)
+# res = np.concatenate((predictHufflepuff,predictRavenclaw,predictSlytherin,predictGryffindor),axis=1)
+# res = np.argmax(res, axis=1)
 
-lstHouse = ["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"]
-resHouse = []
-for index, val  in enumerate(res):
-    resHouse += [lstHouse[int(val)]]
-resHouse = np.array(resHouse)
-resHouse = resHouse.reshape((resHouse.shape[0],1))
+# lstHouse = ["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"]
+# resHouse = []
+# for index, val  in enumerate(res):
+#     resHouse += [lstHouse[int(val)]]
+# resHouse = np.array(resHouse)
+# resHouse = resHouse.reshape((resHouse.shape[0],1))
 
-voulu = pd.read_csv("datasets/dataset_truth.csv")
-print(list(dataSet['Hogwarts House']), resHouse.reshape(res.shape[0]))
-print(confusion_matrix_(list(voulu['Hogwarts House']),resHouse.reshape(resHouse.shape[0]), labels=None))
+# voulu = pd.read_csv("datasets/dataset_truth.csv")
+# print(list(dataSet['Hogwarts House']), resHouse.reshape(res.shape[0]))
+# print(confusion_matrix_(list(voulu['Hogwarts House']),resHouse.reshape(resHouse.shape[0]), labels=None))
 
 
-print(precision_score_(list(voulu['Hogwarts House']), resHouse.reshape(res.shape[0])))
+# print(precision_score_(list(voulu['Hogwarts House']), resHouse.reshape(res.shape[0])))
 
-def oneVsAll(house, index, dataSet):
+def oneVsAll(index, dataSet):
     lstOneOn = [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]
     data = dataSet['Hogwarts House'].replace(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"],lstOneOn[index])
     
+    mlRP = MyLogisticRegression([[0], [0], [0], [0],[0], [0], [0], [0],[0], [0], [0]],alpha=0.0001,n_cycle=6000)
+    Y = np.array(data).reshape((data.shape[0],1))
+    X = np.array(dataSet[lstFeature])
+    #print(mlRP.vec_log_loss_(Y,mlRP.ligistic_predict_(X)))
+
+    mlRP.fit_(X, Y)
+    return mlRP.theta
+    #predictHufflepuff = mlRP.ligistic_predict_(X)
+    #print(mlRP.vec_log_loss_(Y,mlRP.ligistic_predict_(X)))
     pass
+
+def normalizeFeat(dataSet, feat):
+    min = dataSet[feat].min()
+    max = dataSet[feat].max()
+    dataSet[feat] = (dataSet[feat] - min) / (max - min)
+    return [min, max]
 
 def makePrediction(csv):
     lstFeature = ["Herbology","Defense Against the Dark Arts","Divination","Muggle Studies","Ancient Runes","History of Magic","Transfiguration","Potions","Charms","Flying"]
-
+    dicoInfo = {}
     dataSet = pd.read_csv(csv, usecols=["Hogwarts House"]+lstFeature)
     dataSet = dataSet.dropna(axis=0)
 
+    for feat in lstFeature:
+        dicoInfo[feat] = normalizeFeat(dataSet, feat)
     for index, house in enumerate(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"]):
-        oneVsAll(house, index, dataSet)
-    pass
+        dicoInfo[house] = oneVsAll(index, dataSet)
+    return dicoInfo
 
+import json
+import sys
 
-def main(argv):
-    if len(argv) > 1:
-        with open(argv[1], 'r') as file:
-            makePrediction(argv[1])
-
+def main():
+    if len(sys.argv) > 1:
+        with open(sys.argv[1], 'r') as file:
+            dicoInfo = makePrediction(sys.argv[1])
+            with open("infoPred.json", 'w') as file:
+                file.write(json.dumps(dicoInfo))
 main()
