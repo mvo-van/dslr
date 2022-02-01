@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import math
 
 class MyLogisticRegression():
     def __init__(self, theta, alpha=0.001, n_cycle=1000):
@@ -210,16 +209,15 @@ def makePrediction(csv):
     for feat in lstFeature:
         dicoInfo[feat] = normalizeFeat(dataSet, feat)
     for index, house in enumerate(["Hufflepuff","Ravenclaw","Slytherin","Gryffindor"]):
-        dicoInfo[house] = oneVsAll(index, dataSet)
+        dicoInfo[house] = oneVsAll(index, dataSet).tolist()
     return dicoInfo
 
 import json
 import sys
 
-def main():
+if __name__ == '__main__':
     if len(sys.argv) > 1:
         with open(sys.argv[1], 'r') as file:
             dicoInfo = makePrediction(sys.argv[1])
             with open("infoPred.json", 'w') as file:
                 file.write(json.dumps(dicoInfo))
-main()
