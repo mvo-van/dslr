@@ -120,7 +120,7 @@ plt.hist(data2,bins = bins, color = '#2A623D', alpha = 0.25, label = 'data2_name
 plt.hist(data1,bins = bins, color = '#222F5B', alpha = 0.25, label = 'data1_name')
 plt.hist(data3,bins = bins, color = '#AE0001', alpha = 0.25, label = 'data3_name')
 
-plt.ylabel('y_label')
-plt.xlabel('x_label')
+plt.ylabel('répartition')
+plt.xlabel('notes')
 plt.title(featMin)
 plt.show()
